@@ -78,12 +78,15 @@ const Home = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <button
-                            onClick={toggleDarkMode}
-                            className="p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors"
+                        <a
+                            href="https://wa.me/5492216430365"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors flex items-center justify-center"
+                            title="Contactar por WhatsApp"
                         >
-                            <span className="material-icons-outlined">{darkMode ? 'light_mode' : 'dark_mode'}</span>
-                        </button>
+                            <span className="material-icons-outlined">phone</span>
+                        </a>
 
                         {/* Hamburger Button */}
                         <button
