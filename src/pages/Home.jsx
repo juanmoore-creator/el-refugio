@@ -52,11 +52,13 @@ const Home = () => {
     };
 
     const galleryImages = [
-        { id: 1, src: "/images/2.jpeg", caption: "Amanecer en la costa", location: "Vista Norte" },
-        { id: 2, src: "/images/4.jpeg", caption: "Relax total", location: "Spa & Wellness" },
-        { id: 3, src: "/images/5.jpeg", caption: "Interiores elegantes", location: "Suite Principal" },
-        { id: 4, src: "/images/3.jpeg", caption: "Vista al mar", location: "Terraza" },
-        { id: 5, src: "/images/11.jpeg", caption: "Naturaleza viva", location: "Jardines" },
+        { id: 1, src: "/images/1.jpeg", caption: "Amanecer en la costa", location: "Vista Norte" },
+        { id: 2, src: "/images/2.jpeg", caption: "Relax total", location: "Spa & Wellness" },
+        { id: 3, src: "/images/3.jpeg", caption: "Interiores elegantes", location: "Suite Principal" },
+        { id: 4, src: "/images/4.jpeg", caption: "Vista al mar", location: "Terraza" },
+        { id: 5, src: "/images/5.jpeg", caption: "Naturaleza viva", location: "Jardines" },
+        { id: 6, src: "/images/6.jpeg", caption: "Naturaleza viva", location: "Jardines" },
+        { id: 7, src: "/images/7.jpeg", caption: "Naturaleza viva", location: "Jardines" },
     ];
 
     return (
@@ -265,16 +267,21 @@ const Home = () => {
                         ></iframe>
 
                         {/* Overlay Badge */}
-                        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                            <div className="relative">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <a
+                                href="https://www.google.com/maps/place/El+Chalet+De+La+Argentina/@-36.6399135,-56.6847789,19z/data=!4m6!3m5!1s0x959c6dabe016df5f:0x1d6059926c04eae9!8m2!3d-36.6399458!4d-56.6848245!16s%2Fg%2F11j1gh4dlm?hl=es&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="relative pointer-events-auto"
+                            >
                                 <div className="w-12 h-12 bg-hunter-green rounded-full animate-ping absolute -inset-0 opacity-20"></div>
                                 <div className="relative z-10 bg-hunter-green text-white p-3 rounded-full shadow-xl">
                                     <span className="material-icons-outlined">home</span>
                                 </div>
                                 <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white dark:bg-hunter-green px-4 py-2 rounded-lg shadow-lg border border-snow/50 dark:border-snow/10 text-sm font-bold text-hunter-green dark:text-snow">
-                                    El Refugio Boutique
+                                    El Refugio
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div className="absolute top-6 left-6 flex flex-col gap-2">
