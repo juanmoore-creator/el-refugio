@@ -27,7 +27,7 @@ const Home = () => {
     ];
 
     return (
-        <div className={`bg-snow dark:bg-hunter-green text-hunter-green dark:text-snow font-sans transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
+        <div className={`bg-snow dark:bg-hunter-green text-hunter-green dark:text-snow font-sans transition-colors duration-300 overflow-x-hidden ${darkMode ? 'dark' : ''}`}>
 
             {/* Navbar */}
             <nav className="fixed top-0 w-full z-50 bg-snow/90 dark:bg-hunter-green/90 backdrop-blur-md border-b border-muted-olive/20 dark:border-snow/10">
@@ -114,7 +114,7 @@ const Home = () => {
             </section>
 
             {/* Gallery Section */}
-            <section id="galeria" className="py-24 bg-snow dark:bg-olive-bark relative">
+            <section id="galeria" className="py-24 bg-snow dark:bg-olive-bark relative overflow-hidden">
                 {/* Decorative background element */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-muted-olive/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
@@ -253,7 +253,7 @@ const Home = () => {
             {/* Footer */}
             <footer id="contacto" className="bg-olive-bark text-snow py-16 md:py-20 relative overflow-hidden">
                 {/* Decorative circles */}
-                <div className="absolute top-0 left-0 w-96 h-96 bg-hunter-green/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute top-0 left-0 w-96 h-96 bg-hunter-green/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none"></div>
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
