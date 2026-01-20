@@ -1,15 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
-
-function Login() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-2xl">Login (Placeholder)</h1>
-    </div>
-  );
-}
 
 function App() {
   return (
