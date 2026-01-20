@@ -377,28 +377,35 @@ const Home = () => {
                         <span className="material-icons-outlined text-3xl">east</span>
                     </button>
 
-                    {/* Image Container */}
-                    <div className="relative w-full h-full p-4 md:p-20 flex flex-col items-center justify-center pointer-events-none">
-                        <div className="relative max-w-5xl w-full h-full flex items-center justify-center pointer-events-auto">
-                            <img
-                                src={galleryImages[selectedImageIndex].src}
-                                alt={galleryImages[selectedImageIndex].caption}
-                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in duration-300"
-                            />
+                    {/* Image and Caption Container */}
+                    <div className="relative w-full h-full flex flex-col items-center justify-center p-4 md:p-8 pointer-events-none">
+                        <div
+                            key={selectedImageIndex}
+                            className="relative max-w-5xl w-full h-fit flex flex-col items-center justify-center pointer-events-auto animate-in fade-in zoom-in duration-500"
+                        >
+                            <div className="relative w-full flex justify-center">
+                                <img
+                                    src={galleryImages[selectedImageIndex].src}
+                                    alt={galleryImages[selectedImageIndex].caption}
+                                    className="max-w-full max-h-[60vh] md:max-h-[70vh] object-contain rounded-lg shadow-2xl"
+                                />
+                            </div>
 
-                            {/* Caption Overlay */}
-                            <div className="absolute bottom-[-60px] md:bottom-[-80px] left-0 right-0 text-center text-white">
-                                <p className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-1 opacity-70">
+                            {/* Caption Section */}
+                            <div className="mt-8 md:mt-12 text-center text-white max-w-2xl px-4 animate-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-both">
+                                <p className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-2 text-gold-sand opacity-90">
                                     {galleryImages[selectedImageIndex].location}
                                 </p>
-                                <h3 className="text-2xl md:text-4xl font-serif italic">
+                                <h3 className="text-2xl md:text-4xl font-serif italic mb-6 leading-tight">
                                     {galleryImages[selectedImageIndex].caption}
                                 </h3>
-                                <div className="mt-4 flex justify-center gap-1">
+
+                                {/* Pagination Dots */}
+                                <div className="flex justify-center gap-2">
                                     {galleryImages.map((_, i) => (
                                         <div
                                             key={i}
-                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === selectedImageIndex ? 'bg-gold-sand w-6' : 'bg-white/30'}`}
+                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === selectedImageIndex ? 'bg-gold-sand w-6' : 'bg-white/20'}`}
                                         ></div>
                                     ))}
                                 </div>
