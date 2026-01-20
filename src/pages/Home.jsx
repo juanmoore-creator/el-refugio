@@ -52,13 +52,13 @@ const Home = () => {
     };
 
     const galleryImages = [
-        { id: 1, src: "/images/1.jpeg", caption: "Amanecer en la costa", location: "Vista Norte" },
-        { id: 2, src: "/images/2.jpeg", caption: "Relax total", location: "Spa & Wellness" },
-        { id: 3, src: "/images/3.jpeg", caption: "Interiores elegantes", location: "Suite Principal" },
-        { id: 4, src: "/images/4.jpeg", caption: "Vista al mar", location: "Terraza" },
-        { id: 5, src: "/images/5.jpeg", caption: "Naturaleza viva", location: "Jardines" },
-        { id: 6, src: "/images/6.jpeg", caption: "Naturaleza viva", location: "Jardines" },
-        { id: 7, src: "/images/7.jpeg", caption: "Naturaleza viva", location: "Jardines" },
+        { id: 1, src: "/images/1.jpeg", caption: "Parrilla", location: "Patio delantero" },
+        { id: 2, src: "/images/2.jpeg", caption: "Televisión SMART", location: "Cocina-comedor" },
+        { id: 3, src: "/images/3.jpeg", caption: "Vista al bosque", location: "Cocina-comedor" },
+        { id: 4, src: "/images/4.jpeg", caption: "Heladera con freezer, microondas, pava electrica...", location: "Cocina-comedor" },
+        { id: 5, src: "/images/5.jpeg", caption: "Cama matrimonial", location: "Habitación" },
+        { id: 6, src: "/images/6.jpeg", caption: "Excelente ducha", location: "Baño" },
+        { id: 7, src: "/images/7.jpeg", caption: "A 1 cuadra de la playa", location: "Patio delantero" },
     ];
 
     return (
