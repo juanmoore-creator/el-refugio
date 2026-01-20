@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
 import "react-day-picker/style.css";
-import { format } from 'date-fns';
+import { format, eachDayOfInterval, isPast, isSameDay, isBefore } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -33,14 +33,43 @@ export default function BookingCalendar() {
         return () => unsubscribe();
     }, []);
 
+    const handleSelect = (newRange) => {
+        if (newRange?.from && newRange?.to) {
+            // Check if any day in the interval is booked or in the past
+            const daysInInterval = eachDayOfInterval({ start: newRange.from, end: newRange.to });
+            const hasReservedDay = daysInInterval.some(day => {
+                // Check against disabledDays (which can be Date objects or {from, to} objects)
+                const isBooked = disabledDays.some(booked => {
+                    if (booked instanceof Date) return isSameDay(day, booked);
+                    if (booked.from && booked.to) {
+                        return (day >= booked.from && day <= booked.to);
+                    }
+                    return false;
+                });
+
+                // Also check if it's a past day (already handled by disabled prop in UI but good for safety)
+                const isDayPast = isPast(day) && !isSameDay(day, new Date());
+
+                return isBooked || isDayPast;
+            });
+
+            if (hasReservedDay) {
+                // If it contains a reserved day, only keep the first clicked date (the start)
+                setRange({ from: newRange.from, to: undefined });
+                return;
+            }
+        }
+        setRange(newRange);
+    };
+
     const handleWhatsAppClick = () => {
         if (range?.from && range?.to) {
             const startStr = format(range.from, "d 'de' MMMM", { locale: es });
             const endStr = format(range.to, "d 'de' MMMM", { locale: es });
 
-            const message = `Hola, vi el depto en la web. Me interesa reservar del ${startStr} al ${endStr}. ¿Está disponible?`;
+            const message = `Hola, vi el departamento en la web. Me interesa reservar del ${startStr} al ${endStr}. ¿Está disponible?`;
             const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/5491112345678?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/5492216430365?text=${encodedMessage}`, '_blank');
         }
     };
 
@@ -64,7 +93,7 @@ export default function BookingCalendar() {
                     <DayPicker
                         mode="range"
                         selected={range}
-                        onSelect={setRange}
+                        onSelect={handleSelect}
                         disabled={[{ before: new Date() }, ...disabledDays]}
                         modifiers={{
                             booked: disabledDays,

@@ -277,11 +277,16 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="absolute top-6 left-6 flex flex-col gap-2 pointer-events-none">
-                            <div className="bg-white dark:bg-hunter-green p-2 rounded-lg shadow-md flex items-center gap-3">
-                                <span className="material-icons-outlined text-hunter-green dark:text-snow">directions</span>
+                        <div className="absolute top-6 left-6 flex flex-col gap-2">
+                            <a
+                                href="https://www.google.com/maps/place/El+Chalet+De+La+Argentina/@-36.6399135,-56.6847789,19z/data=!4m6!3m5!1s0x959c6dabe016df5f:0x1d6059926c04eae9!8m2!3d-36.6399458!4d-56.6848245!16s%2Fg%2F11j1gh4dlm?hl=es&entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-white dark:bg-hunter-green p-2 rounded-lg shadow-md flex items-center gap-3 hover:bg-muted-olive/10 dark:hover:bg-snow/10 transition-colors pointer-events-auto group"
+                            >
+                                <span className="material-icons-outlined text-hunter-green dark:text-snow group-hover:scale-110 transition-transform">directions</span>
                                 <span className="text-sm font-medium text-hunter-green dark:text-snow">¿Cómo llegar?</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
