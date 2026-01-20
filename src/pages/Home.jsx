@@ -124,7 +124,7 @@ const Home = () => {
                     <div className="absolute inset-0 hero-gradient"></div>
                     <div className="absolute bottom-12 left-6 right-6 md:left-12 md:right-12 text-white text-center md:text-left">
                         <p className="text-xs uppercase tracking-[0.3em] font-medium mb-2 opacity-90">Aguas Verdes</p>
-                        <h2 className="text-3xl md:text-5xl max-w-lg leading-tight font-bold drop-shadow-lg mx-auto md:mx-0">Donde el cielo abraza el mar en calma.</h2>
+                        <h2 className="text-3xl md:text-5xl max-w-lg leading-tight font-bold drop-shadow-lg mx-auto md:mx-0">Donde el cielo abraza al mar en calma.</h2>
                     </div>
                 </div>
                 <div className="lg:w-5/12 flex items-center justify-center p-8 lg:p-20 bg-snow dark:bg-hunter-green text-center lg:text-left">
@@ -134,7 +134,7 @@ const Home = () => {
                             Bienvenido a <br /><span className="text-olive-bark dark:text-muted-olive italic font-serif">El Refugio</span>
                         </h1>
                         <p className="text-lg text-blue-slate dark:text-snow/80 mb-10 leading-relaxed font-light">
-                            Un santuario diseñado para el descanso. Despierta con el sonido de las olas y disfruta de una estadía única en nuestro espacio de confort frente al bosque.
+                            Un lugar diseñado para el descanso. Despertá con el sonido de las olas y disfrutá de una estadía única frente al bosque de Aguas Verdes.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                             <a href="#reservas" className="px-8 py-4 bg-hunter-green text-white text-center rounded-xl font-semibold shadow-lg shadow-hunter-green/30 hover:scale-[1.02] hover:bg-olive-bark transition-all">
@@ -221,20 +221,20 @@ const Home = () => {
                         <div>
                             <h2 className="text-4xl mb-6 text-hunter-green dark:text-snow leading-tight font-bold">Reserva tu Estadía</h2>
                             <p className="text-blue-slate dark:text-snow/80 mb-8 text-lg">
-                                Selecciona las fechas de tu preferencia en el calendario y nos pondremos en contacto con vos para coordinar los detalles de tu llegada.
+                                Selecciona las fechas de tu preferencia en el calendario para consultar disponibilidad y en breve nos ponemos en contacto con vos
                             </p>
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
                                     <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
-                                    Confirmación inmediata
+                                    Respuesta rápida.
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
                                     <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
-                                    Cancelación flexible
+                                    Atención personalizada
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
                                     <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
-                                    Atención personalizada 24/7
+                                    Temporada 2026: $75.000 por día.
                                 </li>
                             </ul>
                         </div>
