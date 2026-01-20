@@ -249,7 +249,7 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-6 text-center mb-16">
                     <h2 className="text-4xl mb-4 text-hunter-green dark:text-snow font-bold">Nuestra Ubicación</h2>
                     <p className="text-blue-slate dark:text-snow/70 max-w-2xl mx-auto">
-                        Encuéntranos frente al mar, en el corazón de la calma. Un entorno natural privilegiado diseñado para desconectar.
+                        Encuéntranos frente al bosque, en el corazón de la calma. Un entorno natural privilegiado diseñado para desconectar.
                     </p>
                 </div>
                 <div className="max-w-7xl mx-auto px-6">
@@ -308,7 +308,7 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
                         <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start">
                             <h2 className="text-3xl mb-6 font-bold text-snow">El Refugio</h2>
-                            <p className="text-snow/70 max-w-sm mb-8">Tu casa lejos de casa. Un refugio de paz y diseño frente al mar pensado para crear recuerdos inolvidables.</p>
+                            <p className="text-snow/70 max-w-sm mb-8">Tu casa lejos de casa. Un refugio de paz y diseño frente al bosque pensado para crear recuerdos inolvidables.</p>
                             <div className="flex gap-4">
                                 <a href="#" className="w-10 h-10 rounded-full bg-hunter-green/30 flex items-center justify-center hover:bg-hunter-green transition-colors">
                                     {/* Icon placeholder or img */}
@@ -337,7 +337,7 @@ const Home = () => {
                                 </li>
                                 <li className="flex items-center justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">phone</span>
-                                    +54 9 11 1234 5678
+
                                 </li>
                                 <li className="flex items-center justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">email</span>
