@@ -60,7 +60,13 @@ export default function BookingCalendar() {
             {loading ? (
                 <p>Cargando disponibilidad...</p>
             ) : (
-                <div className="booking-calendar-wrapper">
+                <div className="booking-calendar-wrapper" style={{
+                    "--rdp-cell-size": "50px",
+                    "--rdp-caption-font-size": "1.2rem",
+                    "--rdp-accent-color": "#4a6c45",
+                    "--rdp-background-color": "#fcf7f8",
+                    color: "#1f2937"
+                }}>
                     <DayPicker
                         mode="range"
                         selected={range}
