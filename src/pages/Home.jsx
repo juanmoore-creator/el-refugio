@@ -67,7 +67,7 @@ const Home = () => {
                 </div>
                 <div className="lg:w-5/12 flex items-center justify-center p-8 lg:p-20 bg-snow dark:bg-hunter-green">
                     <div className="max-w-md w-full">
-                        <span className="inline-block px-3 py-1 bg-muted-olive/30 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6">Boutique Stay</span>
+                        <span className="inline-block px-3 py-1 bg-gold-sand/40 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6">Boutique Stay</span>
                         <h1 className="text-5xl lg:text-7xl mb-6 text-hunter-green dark:text-snow leading-none font-bold">
                             Bienvenido a <br /><span className="text-olive-bark dark:text-muted-olive italic font-serif">El Refugio</span>
                         </h1>
@@ -143,7 +143,7 @@ const Home = () => {
                 {/* Scroll Progress Indicator (Optional visual cue) */}
                 <div className="flex justify-center mt-4 gap-2">
                     {galleryImages.map((_, i) => (
-                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-hunter-green/20 dark:bg-snow/20"></div>
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-olive-bark/30 dark:bg-gold-sand/50"></div>
                     ))}
                 </div>
             </section>
@@ -159,15 +159,15 @@ const Home = () => {
                             </p>
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
-                                    <span className="material-icons-outlined text-olive-bark dark:text-muted-olive">check_circle</span>
+                                    <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
                                     Confirmación inmediata
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
-                                    <span className="material-icons-outlined text-olive-bark dark:text-muted-olive">check_circle</span>
+                                    <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
                                     Cancelación flexible
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
-                                    <span className="material-icons-outlined text-olive-bark dark:text-muted-olive">check_circle</span>
+                                    <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
                                     Atención personalizada 24/7
                                 </li>
                             </ul>
