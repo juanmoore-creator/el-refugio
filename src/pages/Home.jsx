@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import BookingCalendar from '../components/BookingCalendar';
 
 const Home = () => {
@@ -9,11 +9,20 @@ const Home = () => {
         document.documentElement.classList.toggle('dark');
     };
 
+    const scrollContainerRef = useRef(null);
+
+    const scroll = (offset) => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+        }
+    };
+
     const galleryImages = [
-        { id: 1, src: "/images/2.jpeg", caption: "Amanecer en la costa", rotation: "-rotate-1" },
-        { id: 2, src: "/images/4.jpeg", caption: "Relax total", rotation: "rotate-1" },
-        { id: 3, src: "/images/5.jpeg", caption: "Interiores elegantes", rotation: "-rotate-1" },
-        { id: 4, src: "/images/3.jpeg", caption: "Vista al mar", rotation: "rotate-2" },
+        { id: 1, src: "/images/2.jpeg", caption: "Amanecer en la costa", location: "Vista Norte" },
+        { id: 2, src: "/images/4.jpeg", caption: "Relax total", location: "Spa & Wellness" },
+        { id: 3, src: "/images/5.jpeg", caption: "Interiores elegantes", location: "Suite Principal" },
+        { id: 4, src: "/images/3.jpeg", caption: "Vista al mar", location: "Terraza" },
+        { id: 5, src: "/images/11.jpeg", caption: "Naturaleza viva", location: "Jardines" },
     ];
 
     return (
@@ -87,27 +96,49 @@ const Home = () => {
                         <p className="text-blue-slate dark:text-snow/70">Desliza para ver cada rincón de nuestra propiedad.</p>
                     </div>
                     <div className="hidden md:flex gap-2">
-                        <button className="p-3 border border-muted-olive/50 dark:border-snow/20 rounded-full hover:bg-white dark:hover:bg-hunter-green text-hunter-green dark:text-snow transition-all shadow-sm">
+                        <button onClick={() => scroll(-300)} className="p-3 border border-muted-olive/50 dark:border-snow/20 rounded-full hover:bg-white dark:hover:bg-hunter-green text-hunter-green dark:text-snow transition-all shadow-sm">
                             <span className="material-icons-outlined">west</span>
                         </button>
-                        <button className="p-3 border border-muted-olive/50 dark:border-snow/20 rounded-full hover:bg-white dark:hover:bg-hunter-green text-hunter-green dark:text-snow transition-all shadow-sm">
+                        <button onClick={() => scroll(300)} className="p-3 border border-muted-olive/50 dark:border-snow/20 rounded-full hover:bg-white dark:hover:bg-hunter-green text-hunter-green dark:text-snow transition-all shadow-sm">
                             <span className="material-icons-outlined">east</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Horizontal Scroll Gallery */}
-                <div className="scroll-container hide-scrollbar flex overflow-x-auto gap-8 px-6 pb-12">
+                {/* Horizontal Scroll Gallery */}
+                <div
+                    ref={scrollContainerRef}
+                    className="scroll-container hide-scrollbar flex overflow-x-auto gap-6 px-6 pb-12 snap-x snap-mandatory scroll-smooth"
+                >
                     {galleryImages.map((img) => (
-                        <div key={img.id} className="scroll-item flex-none w-[300px] md:w-[400px]">
-                            {/* Polaroid Style Card */}
-                            <div className={`bg-white p-5 shadow-xl transform transition-transform duration-300 hover:scale-105 hover:z-10 ${img.rotation}`}>
-                                <div className="aspect-[4/5] bg-gray-100 mb-5 overflow-hidden filter sepia-[.15] hover:sepia-0 transition-all duration-500">
-                                    <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
+                        <div key={img.id} className="scroll-item flex-none w-[85vw] sm:w-[350px] group relative cursor-pointer">
+                            {/* Premium Card Design */}
+                            <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-md transition-all duration-500 group-hover:shadow-2xl">
+                                <img
+                                    src={img.src}
+                                    alt={img.caption}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute bottom-0 left-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-white opacity-0 group-hover:opacity-100">
+                                    <p className="text-xs font-bold tracking-widest uppercase mb-1">{img.location}</p>
+                                    <h3 className="font-serif text-2xl italic">{img.caption}</h3>
                                 </div>
-                                <h3 className="text-center font-serif text-olive-bark text-xl italic">{img.caption}</h3>
+                            </div>
+                            {/* Mobile caption visible below card for better UX on touch */}
+                            <div className="mt-4 md:hidden text-center">
+                                <h3 className="font-serif text-xl italic text-hunter-green dark:text-snow">{img.caption}</h3>
+                                <p className="text-xs text-olive-bark dark:text-gray-400 uppercase tracking-widest mt-1">{img.location}</p>
                             </div>
                         </div>
+                    ))}
+                </div>
+
+                {/* Scroll Progress Indicator (Optional visual cue) */}
+                <div className="flex justify-center mt-4 gap-2">
+                    {galleryImages.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-hunter-green/20 dark:bg-snow/20"></div>
                     ))}
                 </div>
             </section>
@@ -156,7 +187,7 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-hunter-green aspect-video lg:aspect-[21/9]">
                         <iframe
-                            src="<iframe src=<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d400.17972266674457!2d-56.68497795042744!3d-36.639917529653644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1768877704180!5m2!1ses!2sar"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2692.061204101118!2d-56.68607952103947!3d-36.64038539620979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1768878001299!5m2!1ses!2sar"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
