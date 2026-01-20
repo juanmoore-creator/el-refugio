@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import BookingCalendar from '../components/BookingCalendar';
 
 const Home = () => {
@@ -11,6 +11,39 @@ const Home = () => {
     };
 
     const scrollContainerRef = useRef(null);
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+    const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+    const openGallery = (index) => {
+        setSelectedImageIndex(index);
+        setIsGalleryOpen(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeGallery = () => {
+        setIsGalleryOpen(false);
+        document.body.style.overflow = 'auto';
+    };
+
+    const nextGalleryImage = () => {
+        setSelectedImageIndex((prev) => (prev + 1) % galleryImages.length);
+    };
+
+    const prevGalleryImage = () => {
+        setSelectedImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!isGalleryOpen) return;
+            if (e.key === 'Escape') closeGallery();
+            if (e.key === 'ArrowRight') nextGalleryImage();
+            if (e.key === 'ArrowLeft') prevGalleryImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isGalleryOpen]);
 
     const scroll = (offset) => {
         if (scrollContainerRef.current) {
@@ -140,8 +173,12 @@ const Home = () => {
                     className="scroll-container hide-scrollbar flex overflow-x-auto gap-6 px-6 pb-12 snap-x snap-mandatory scroll-smooth"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {galleryImages.map((img) => (
-                        <div key={img.id} className="scroll-item flex-none w-[90vw] sm:w-[350px] group relative cursor-pointer">
+                    {galleryImages.map((img, index) => (
+                        <div
+                            key={img.id}
+                            className="scroll-item flex-none w-[90vw] sm:w-[350px] group relative cursor-pointer"
+                            onClick={() => openGallery(index)}
+                        >
                             {/* Premium Card Design */}
                             <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-md transition-all duration-500 group-hover:shadow-2xl">
                                 <img
@@ -302,6 +339,62 @@ const Home = () => {
                     </div>
                 </div>
             </footer>
+            {/* Gallery Modal */}
+            {isGalleryOpen && selectedImageIndex !== null && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-hunter-green/95 backdrop-blur-xl transition-all duration-500">
+                    {/* Close Button */}
+                    <button
+                        onClick={closeGallery}
+                        className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
+                    >
+                        <span className="material-icons-outlined text-3xl">close</span>
+                    </button>
+
+                    {/* Navigation Buttons */}
+                    <button
+                        onClick={prevGalleryImage}
+                        className="absolute left-4 md:left-8 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
+                    >
+                        <span className="material-icons-outlined text-3xl">west</span>
+                    </button>
+
+                    <button
+                        onClick={nextGalleryImage}
+                        className="absolute right-4 md:right-8 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
+                    >
+                        <span className="material-icons-outlined text-3xl">east</span>
+                    </button>
+
+                    {/* Image Container */}
+                    <div className="relative w-full h-full p-4 md:p-20 flex flex-col items-center justify-center pointer-events-none">
+                        <div className="relative max-w-5xl w-full h-full flex items-center justify-center pointer-events-auto">
+                            <img
+                                src={galleryImages[selectedImageIndex].src}
+                                alt={galleryImages[selectedImageIndex].caption}
+                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in duration-300"
+                            />
+
+                            {/* Caption Overlay */}
+                            <div className="absolute bottom-[-60px] md:bottom-[-80px] left-0 right-0 text-center text-white">
+                                <p className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-1 opacity-70">
+                                    {galleryImages[selectedImageIndex].location}
+                                </p>
+                                <h3 className="text-2xl md:text-4xl font-serif italic">
+                                    {galleryImages[selectedImageIndex].caption}
+                                </h3>
+                                <div className="mt-4 flex justify-center gap-1">
+                                    {galleryImages.map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === selectedImageIndex ? 'bg-gold-sand w-6' : 'bg-white/30'}`}
+                                        ></div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
