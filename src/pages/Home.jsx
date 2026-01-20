@@ -284,7 +284,7 @@ const Home = () => {
                             <ul className="space-y-4 text-snow/70">
                                 <li className="flex items-start justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">location_on</span>
-                                    <span>Av. del Mar 1230, <br />Pinamar, Argentina</span>
+                                    <span>Yate Fortuna <br />Aguas Verdes</span>
                                 </li>
                                 <li className="flex items-center justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">phone</span>
@@ -298,7 +298,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="pt-8 border-t border-snow/10 text-center text-snow/50 text-sm">
-                        <p>&copy; {new Date().getFullYear()} El Refugio Boutique. Todos los derechos reservados.</p>
+                        <p>&copy; {new Date().getFullYear()} El Refugio. Todos los derechos reservados.</p>
                     </div>
                 </div>
             </footer>
