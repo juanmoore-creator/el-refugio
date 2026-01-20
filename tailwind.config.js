@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        'refugio-sage': '#8fbc8f',
-        'refugio-cream': '#fcf7f8',
-        'refugio-earth': '#6b5b3e',
-        'refugio-forest': '#4a6c45',
-        'refugio-slate': '#5d737e',
+        'muted-olive': '#8fbc8f',
+        'snow': '#fcf7f8',
+        'olive-bark': '#6b5b3e',
+        'hunter-green': '#4a6c45',
+        'blue-slate': '#5d737e',
       },
       fontFamily: {
         'sans': ['Montserrat', 'sans-serif'],
