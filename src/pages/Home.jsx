@@ -179,7 +179,7 @@ const Home = () => {
                         <div>
                             <h2 className="text-4xl mb-6 text-hunter-green dark:text-snow leading-tight font-bold">Reserva tu Estadía</h2>
                             <p className="text-blue-slate dark:text-snow/80 mb-8 text-lg">
-                                Selecciona las fechas de tu preferencia en el calendario y nuestro equipo se pondrá en contacto contigo para coordinar los detalles de tu llegada.
+                                Selecciona las fechas de tu preferencia en el calendario y nos pondremos en contacto con vos para coordinar los detalles de tu llegada.
                             </p>
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
