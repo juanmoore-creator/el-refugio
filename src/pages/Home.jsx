@@ -50,9 +50,13 @@ const Home = () => {
             {/* Hero Section */}
             <section className="relative min-h-screen flex flex-col lg:flex-row pt-20 overflow-hidden">
                 <div className="lg:w-7/12 relative h-[50vh] lg:h-auto overflow-hidden group">
-                    <img
-                        src="/images/11.jpeg"
-                        alt="Coastal landscape view"
+                    <video
+                        src="/videos/video.mp4"
+                        poster="/images/11.jpeg"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 hero-gradient"></div>
