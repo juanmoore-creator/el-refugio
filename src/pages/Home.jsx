@@ -85,18 +85,18 @@ const Home = () => {
                     />
                     <div className="absolute inset-0 hero-gradient"></div>
                     <div className="absolute bottom-12 left-6 right-6 md:left-12 md:right-12 text-white text-center md:text-left">
-                        <p className="text-xs uppercase tracking-[0.3em] font-medium mb-2 opacity-90">La costa argentina</p>
+                        <p className="text-xs uppercase tracking-[0.3em] font-medium mb-2 opacity-90">Aguas Verdes</p>
                         <h2 className="text-3xl md:text-5xl max-w-lg leading-tight font-bold drop-shadow-lg mx-auto md:mx-0">Donde el cielo abraza el mar en calma.</h2>
                     </div>
                 </div>
                 <div className="lg:w-5/12 flex items-center justify-center p-8 lg:p-20 bg-snow dark:bg-hunter-green text-center lg:text-left">
                     <div className="max-w-md w-full">
-                        <span className="inline-block px-3 py-1 bg-gold-sand/40 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6 text-center">Boutique Stay</span>
+                        <span className="inline-block px-3 py-1 bg-gold-sand/40 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6 text-center">Alquiler</span>
                         <h1 className="text-5xl lg:text-7xl mb-6 text-hunter-green dark:text-snow leading-none font-bold">
                             Bienvenido a <br /><span className="text-olive-bark dark:text-muted-olive italic font-serif">El Refugio</span>
                         </h1>
                         <p className="text-lg text-blue-slate dark:text-snow/80 mb-10 leading-relaxed font-light">
-                            Un santuario diseñado para el descanso. Despierta con el sonido de las olas y disfruta de una estadía única en nuestro espacio de diseño minimalista frente a la costa.
+                            Un santuario diseñado para el descanso. Despierta con el sonido de las olas y disfruta de una estadía única en nuestro espacio de confort frente al bosque.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                             <a href="#reservas" className="px-8 py-4 bg-hunter-green text-white text-center rounded-xl font-semibold shadow-lg shadow-hunter-green/30 hover:scale-[1.02] hover:bg-olive-bark transition-all">
@@ -107,7 +107,7 @@ const Home = () => {
                             </a>
                         </div>
                         <div className="mt-12 flex items-center gap-4 text-blue-slate dark:text-snow/60 text-sm font-medium">
-                            <span>+200 estadías inolvidables</span>
+                            <span>Contactanos para más información</span>
                         </div>
                     </div>
                 </div>
