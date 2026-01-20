@@ -12,7 +12,7 @@ const Home = () => {
                 <div
                     className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
                     style={{
-                        backgroundImage: "url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
+                        backgroundImage: "url('/images/11.jpeg')"
                     }}
                 >
                     {/* Dark Overlay */}

@@ -17,10 +17,10 @@ const PolaroidGallery = () => {
     // Placeholder images from unsplash or similar would be good, but I'll use placeholders for now
     // In a real scenario, these would be real assets
     const photos = [
-        { id: 1, src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", caption: "Amanecer en la costa", rotation: "-rotate-2" },
-        { id: 2, src: "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", caption: "Relax total", rotation: "rotate-3" },
-        { id: 3, src: "https://images.unsplash.com/photo-1440778303588-435521a205bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", caption: "Nuestros rincones", rotation: "-rotate-1" },
-        { id: 4, src: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", caption: "Vista al mar", rotation: "rotate-2" },
+        { id: 1, src: "/images/2.jpeg", caption: "Amanecer en la costa", rotation: "-rotate-2" },
+        { id: 2, src: "/images/4.jpeg", caption: "Relax total", rotation: "rotate-3" },
+        { id: 3, src: "/images/5.jpeg", caption: "Nuestros rincones", rotation: "-rotate-1" },
+        { id: 4, src: "/images/3.jpeg", caption: "Vista al mar", rotation: "rotate-2" },
     ];
 
     return (
