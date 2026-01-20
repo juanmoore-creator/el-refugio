@@ -114,6 +114,7 @@ const Home = () => {
                 <div
                     ref={scrollContainerRef}
                     className="scroll-container hide-scrollbar flex overflow-x-auto gap-6 px-6 pb-12 snap-x snap-mandatory scroll-smooth"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {galleryImages.map((img) => (
                         <div key={img.id} className="scroll-item flex-none w-[85vw] sm:w-[350px] group relative cursor-pointer">
