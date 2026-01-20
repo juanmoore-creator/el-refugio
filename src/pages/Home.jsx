@@ -3,6 +3,7 @@ import BookingCalendar from '../components/BookingCalendar';
 
 const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
@@ -32,24 +33,47 @@ const Home = () => {
             <nav className="fixed top-0 w-full z-50 bg-snow/90 dark:bg-hunter-green/90 backdrop-blur-md border-b border-muted-olive/20 dark:border-snow/10">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                     <div className="text-2xl font-bold tracking-tight text-hunter-green dark:text-snow font-sans">El Refugio</div>
+
+                    {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide uppercase text-blue-slate dark:text-snow/90">
                         <a href="#galeria" className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Galería</a>
                         <a href="#reservas" className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Reserva</a>
                         <a href="#ubicacion" className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Ubicación</a>
                         <a href="#reservas" className="px-5 py-2.5 bg-hunter-green text-white rounded-full hover:bg-olive-bark transition-all font-semibold shadow-md hover:shadow-lg">Reservar Ahora</a>
                     </div>
-                    <button
-                        onClick={toggleDarkMode}
-                        className="p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors"
-                    >
-                        <span className="material-icons-outlined">dark_mode</span>
-                    </button>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={toggleDarkMode}
+                            className="p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors"
+                        >
+                            <span className="material-icons-outlined">{darkMode ? 'light_mode' : 'dark_mode'}</span>
+                        </button>
+
+                        {/* Hamburger Button */}
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors"
+                        >
+                            <span className="material-icons-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu Overlay */}
+                <div className={`md:hidden absolute top-20 left-0 w-full bg-snow dark:bg-hunter-green border-b border-muted-olive/20 dark:border-snow/10 transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-96' : 'max-h-0'}`}>
+                    <div className="px-6 py-8 flex flex-col space-y-6 text-lg font-medium tracking-wide uppercase text-blue-slate dark:text-snow/90 text-center">
+                        <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Galería</a>
+                        <a href="#reservas" onClick={() => setMobileMenuOpen(false)} className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Reserva</a>
+                        <a href="#ubicacion" onClick={() => setMobileMenuOpen(false)} className="hover:text-olive-bark dark:hover:text-muted-olive transition-colors">Ubicación</a>
+                        <a href="#reservas" onClick={() => setMobileMenuOpen(false)} className="mx-auto px-8 py-3 bg-hunter-green text-white rounded-xl font-semibold shadow-md w-full max-w-xs">Reservar Ahora</a>
+                    </div>
                 </div>
             </nav>
 
             {/* Hero Section */}
             <section className="relative min-h-screen flex flex-col lg:flex-row pt-20 overflow-hidden">
-                <div className="lg:w-7/12 relative h-[50vh] lg:h-auto overflow-hidden group">
+                <div className="lg:w-7/12 relative h-[60vh] lg:h-auto overflow-hidden group">
                     <video
                         src="/videos/video.mp4"
                         poster="/images/11.jpeg"
@@ -60,14 +84,14 @@ const Home = () => {
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 hero-gradient"></div>
-                    <div className="absolute bottom-12 left-12 right-12 text-white">
+                    <div className="absolute bottom-12 left-6 right-6 md:left-12 md:right-12 text-white text-center md:text-left">
                         <p className="text-xs uppercase tracking-[0.3em] font-medium mb-2 opacity-90">La costa argentina</p>
-                        <h2 className="text-4xl md:text-5xl max-w-lg leading-tight font-bold drop-shadow-lg">Donde el cielo abraza el mar en calma.</h2>
+                        <h2 className="text-3xl md:text-5xl max-w-lg leading-tight font-bold drop-shadow-lg mx-auto md:mx-0">Donde el cielo abraza el mar en calma.</h2>
                     </div>
                 </div>
-                <div className="lg:w-5/12 flex items-center justify-center p-8 lg:p-20 bg-snow dark:bg-hunter-green">
+                <div className="lg:w-5/12 flex items-center justify-center p-8 lg:p-20 bg-snow dark:bg-hunter-green text-center lg:text-left">
                     <div className="max-w-md w-full">
-                        <span className="inline-block px-3 py-1 bg-gold-sand/40 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6">Boutique Stay</span>
+                        <span className="inline-block px-3 py-1 bg-gold-sand/40 text-hunter-green dark:text-snow text-xs font-bold uppercase tracking-widest rounded-full mb-6 text-center">Boutique Stay</span>
                         <h1 className="text-5xl lg:text-7xl mb-6 text-hunter-green dark:text-snow leading-none font-bold">
                             Bienvenido a <br /><span className="text-olive-bark dark:text-muted-olive italic font-serif">El Refugio</span>
                         </h1>
@@ -117,7 +141,7 @@ const Home = () => {
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {galleryImages.map((img) => (
-                        <div key={img.id} className="scroll-item flex-none w-[85vw] sm:w-[350px] group relative cursor-pointer">
+                        <div key={img.id} className="scroll-item flex-none w-[90vw] sm:w-[350px] group relative cursor-pointer">
                             {/* Premium Card Design */}
                             <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-md transition-all duration-500 group-hover:shadow-2xl">
                                 <img
@@ -126,7 +150,7 @@ const Home = () => {
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                <div className="absolute bottom-0 left-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-white opacity-0 group-hover:opacity-100">
+                                <div className="absolute bottom-0 left-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-white opacity-0 md:group-hover:opacity-100">
                                     <p className="text-xs font-bold tracking-widest uppercase mb-1">{img.location}</p>
                                     <h3 className="font-serif text-2xl italic">{img.caption}</h3>
                                 </div>
@@ -190,9 +214,9 @@ const Home = () => {
                     </p>
                 </div>
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-hunter-green aspect-video lg:aspect-[21/9]">
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white dark:border-hunter-green aspect-square md:aspect-video lg:aspect-[21/9]">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2692.061204101118!2d-56.68607952103947!3d-36.64038539620979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1768878001299!5m2!1ses!2sar"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d800.3596675332701!2d-56.68515583973072!3d-36.63989614235009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1768881312677!5m2!1ses!2sar"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
@@ -227,13 +251,13 @@ const Home = () => {
             </section>
 
             {/* Footer */}
-            <footer id="contacto" className="bg-olive-bark text-snow py-20 relative overflow-hidden">
+            <footer id="contacto" className="bg-olive-bark text-snow py-16 md:py-20 relative overflow-hidden">
                 {/* Decorative circles */}
                 <div className="absolute top-0 left-0 w-96 h-96 bg-hunter-green/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <div className="grid md:grid-cols-4 gap-12 mb-16">
-                        <div className="col-span-2">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
+                        <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start">
                             <h2 className="text-3xl mb-6 font-bold text-snow">El Refugio</h2>
                             <p className="text-snow/70 max-w-sm mb-8">Tu casa lejos de casa. Un refugio de paz y diseño frente al mar pensado para crear recuerdos inolvidables.</p>
                             <div className="flex gap-4">
@@ -258,15 +282,15 @@ const Home = () => {
                         <div>
                             <h4 className="font-bold mb-6 text-muted-olive">Contacto</h4>
                             <ul className="space-y-4 text-snow/70">
-                                <li className="flex items-start gap-3">
+                                <li className="flex items-start justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">location_on</span>
-                                    Av. del Mar 1230, <br />Pinamar, Argentina
+                                    <span>Av. del Mar 1230, <br />Pinamar, Argentina</span>
                                 </li>
-                                <li className="flex items-center gap-3">
+                                <li className="flex items-center justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">phone</span>
                                     +54 9 11 1234 5678
                                 </li>
-                                <li className="flex items-center gap-3">
+                                <li className="flex items-center justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">email</span>
                                     hola@elrefugio.com
                                 </li>
