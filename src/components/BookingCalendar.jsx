@@ -65,7 +65,10 @@ export default function BookingCalendar() {
                         mode="range"
                         selected={range}
                         onSelect={setRange}
-                        disabled={disabledDays}
+                        disabled={[{ before: new Date() }, ...disabledDays]}
+                        modifiers={{
+                            booked: disabledDays,
+                        }}
                         locale={es}
                         footer={
                             <div className="mt-6 pt-4 border-t border-gray-100 italic">
