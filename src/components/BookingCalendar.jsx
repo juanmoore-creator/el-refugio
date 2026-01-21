@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
 import "react-day-picker/style.css";
-import { format, eachDayOfInterval, isPast, isSameDay, isBefore } from 'date-fns';
+import { format, eachDayOfInterval, isPast, isSameDay, isBefore, addDays, startOfToday } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -33,6 +33,9 @@ export default function BookingCalendar() {
         return () => unsubscribe();
     }, []);
 
+    const today = startOfToday();
+    const tomorrow = addDays(today, 1);
+
     const handleSelect = (newRange) => {
         if (newRange?.from && newRange?.to) {
             // Check if any day in the interval is booked or in the past
@@ -47,10 +50,10 @@ export default function BookingCalendar() {
                     return false;
                 });
 
-                // Also check if it's a past day (already handled by disabled prop in UI but good for safety)
-                const isDayPast = isPast(day) && !isSameDay(day, new Date());
+                // Check if it's past or today
+                const isPastOrToday = isBefore(day, tomorrow);
 
-                return isBooked || isDayPast;
+                return isBooked || isPastOrToday;
             });
 
             if (hasReservedDay) {
@@ -94,12 +97,26 @@ export default function BookingCalendar() {
                         mode="range"
                         selected={range}
                         onSelect={handleSelect}
-                        disabled={[{ before: new Date() }, ...disabledDays]}
+                        disabled={[{ before: tomorrow }, ...disabledDays]}
                         modifiers={{
-                            booked: disabledDays,
+                            booked: (date) => {
+                                // Only mark as booked if it's in the future (not disabled by "past/today" logic)
+                                const isFuture = !isBefore(date, tomorrow);
+                                if (!isFuture) return false;
+
+                                return disabledDays.some(booked => {
+                                    if (booked instanceof Date) return isSameDay(date, booked);
+                                    if (booked.from && booked.to) {
+                                        return (date >= booked.from && date <= booked.to);
+                                    }
+                                    return false;
+                                });
+                            },
                             available: (date) => {
-                                // A date is available if it's not in the past and not in disabledDays
-                                const isPastDay = isBefore(date, new Date()) && !isSameDay(date, new Date());
+                                // A date is available if it's future and not booked
+                                const isFuture = !isBefore(date, tomorrow);
+                                if (!isFuture) return false;
+
                                 const isBooked = disabledDays.some(booked => {
                                     if (booked instanceof Date) return isSameDay(date, booked);
                                     if (booked.from && booked.to) {
@@ -107,7 +124,7 @@ export default function BookingCalendar() {
                                     }
                                     return false;
                                 });
-                                return !isPastDay && !isBooked;
+                                return !isBooked;
                             }
                         }}
                         modifiersClassNames={{
