@@ -110,6 +110,10 @@ export default function BookingCalendar() {
                                 return !isPastDay && !isBooked;
                             }
                         }}
+                        modifiersClassNames={{
+                            booked: 'text-red-500 line-through',
+                            available: 'text-green-700 font-bold',
+                        }}
                         locale={es}
                         footer={
                             <div className="mt-6 pt-4 border-t border-gray-100 italic">
