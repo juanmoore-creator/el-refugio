@@ -81,16 +81,16 @@
 
 /* React Day Picker Custom Styles */
 .rdp-day_booked:not(.rdp-day_selected) {
-  background-color: #fee2e2 !important;
-  color: #991b1b !important;
-  opacity: 0.9;
+  background-color: #fca5a5 !important;
+  color: #7f1d1d !important;
+  opacity: 1;
   cursor: not-allowed !important;
   border-radius: 4px;
 }
 
 .rdp-day_available:not(.rdp-day_selected):not(.rdp-today) {
-  background-color: #f0fdf4 !important;
-  color: #166534 !important;
+  background-color: #86efac !important;
+  color: #064e3b !important;
   border-radius: 4px;
 }
 

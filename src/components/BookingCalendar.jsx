@@ -124,11 +124,11 @@ export default function BookingCalendar() {
                                 {/* Legend */}
                                 <div className="mt-6 flex flex-col gap-2 border-t border-gray-50 pt-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-3 h-3 rounded-full bg-[#fee2e2] border border-[#fecaca]"></div>
+                                        <div className="w-3 h-3 rounded-full bg-[#fca5a5] border border-[#f87171]"></div>
                                         <span className="text-xs text-gray-600 not-italic font-medium">No disponible</span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-3 h-3 rounded-full bg-[#f0fdf4] border border-[#dcfce7]"></div>
+                                        <div className="w-3 h-3 rounded-full bg-[#86efac] border border-[#4ade80]"></div>
                                         <span className="text-xs text-gray-600 not-italic font-medium">Disponible (consultar por Whatsapp)</span>
                                     </div>
                                 </div>
