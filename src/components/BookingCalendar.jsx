@@ -128,7 +128,7 @@ export default function BookingCalendar() {
                             }
                         }}
                         modifiersClassNames={{
-                            booked: 'text-red-500 line-through',
+                            booked: 'text-red-500',
                             available: 'text-green-700 font-bold',
                         }}
                         locale={es}

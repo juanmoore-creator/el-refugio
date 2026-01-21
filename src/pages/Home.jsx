@@ -246,7 +246,7 @@ const Home = () => {
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
                                     <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
-                                    Atención personalizada
+                                    Atención personalizada.
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium group">
                                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-sand/20 text-olive-bark dark:text-gold-sand group-hover:scale-110 transition-transform">
@@ -279,7 +279,7 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white dark:border-hunter-green aspect-square md:aspect-video lg:aspect-[21/9]">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d800.3596675332701!2d-56.68515583973072!3d-36.63989614235009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1768881312677!5m2!1ses!2sar"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d800.3607840793934!2d-56.68493715033188!3d-36.63978867173563!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959c6dabe016df5f%3A0x1d6059926c04eae9!2sEl%20Chalet%20De%20La%20Argentina!5e0!3m2!1ses!2sar!4v1769036250069!5m2!1ses!2sar"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
@@ -334,12 +334,9 @@ const Home = () => {
                             <h2 className="text-3xl mb-6 font-bold text-snow">El Refugio</h2>
                             <p className="text-snow/70 max-w-sm mb-8">Tu casa lejos de casa. Un refugio de paz y diseño frente al bosque pensado para crear recuerdos inolvidables.</p>
                             <div className="flex gap-4">
-                                <a href="#" className="w-10 h-10 rounded-full bg-hunter-green/30 flex items-center justify-center hover:bg-hunter-green transition-colors">
+                                <a href="https://www.instagram.com/elrefugio.aguasverdes/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-hunter-green/30 flex items-center justify-center hover:bg-hunter-green transition-colors">
                                     {/* Icon placeholder or img */}
                                     <span className="text-xs">IG</span>
-                                </a>
-                                <a href="#" className="w-10 h-10 rounded-full bg-hunter-green/30 flex items-center justify-center hover:bg-hunter-green transition-colors">
-                                    <span className="text-xs">FB</span>
                                 </a>
                             </div>
                         </div>
