@@ -107,7 +107,14 @@ export default function BookingCalendar() {
                                 return disabledDays.some(booked => {
                                     if (booked instanceof Date) return isSameDay(date, booked);
                                     if (booked.from && booked.to) {
-                                        return (date >= booked.from && date <= booked.to);
+                                        // Normalize booking dates to start of day to ignore time
+                                        const bookedStart = new Date(booked.from);
+                                        bookedStart.setHours(0, 0, 0, 0);
+
+                                        const bookedEnd = new Date(booked.to);
+                                        bookedEnd.setHours(0, 0, 0, 0);
+
+                                        return (date >= bookedStart && date <= bookedEnd);
                                     }
                                     return false;
                                 });
@@ -120,7 +127,13 @@ export default function BookingCalendar() {
                                 const isBooked = disabledDays.some(booked => {
                                     if (booked instanceof Date) return isSameDay(date, booked);
                                     if (booked.from && booked.to) {
-                                        return (date >= booked.from && date <= booked.to);
+                                        const bookedStart = new Date(booked.from);
+                                        bookedStart.setHours(0, 0, 0, 0);
+
+                                        const bookedEnd = new Date(booked.to);
+                                        bookedEnd.setHours(0, 0, 0, 0);
+
+                                        return (date >= bookedStart && date <= bookedEnd);
                                     }
                                     return false;
                                 });
@@ -128,7 +141,7 @@ export default function BookingCalendar() {
                             }
                         }}
                         modifiersClassNames={{
-                            booked: 'text-red-500',
+                            booked: 'rdp-day_booked', // Explicitly ensure class if needed, or just let default behavior work. Relying on CSS.
                             available: 'text-green-700 font-bold',
                         }}
                         locale={es}
