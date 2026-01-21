@@ -3,10 +3,12 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
+import PWARedirectController from './components/PWARedirectController';
 
 function App() {
   return (
     <BrowserRouter>
+      <PWARedirectController />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

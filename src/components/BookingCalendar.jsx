@@ -97,6 +97,18 @@ export default function BookingCalendar() {
                         disabled={[{ before: new Date() }, ...disabledDays]}
                         modifiers={{
                             booked: disabledDays,
+                            available: (date) => {
+                                // A date is available if it's not in the past and not in disabledDays
+                                const isPastDay = isBefore(date, new Date()) && !isSameDay(date, new Date());
+                                const isBooked = disabledDays.some(booked => {
+                                    if (booked instanceof Date) return isSameDay(date, booked);
+                                    if (booked.from && booked.to) {
+                                        return (date >= booked.from && date <= booked.to);
+                                    }
+                                    return false;
+                                });
+                                return !isPastDay && !isBooked;
+                            }
                         }}
                         locale={es}
                         footer={
@@ -108,6 +120,18 @@ export default function BookingCalendar() {
                                 ) : (
                                     <p className="text-center text-blue-slate text-sm">Selecciona tu llegada y salida.</p>
                                 )}
+
+                                {/* Legend */}
+                                <div className="mt-6 flex flex-col gap-2 border-t border-gray-50 pt-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-3 h-3 rounded-full bg-[#fee2e2] border border-[#fecaca]"></div>
+                                        <span className="text-xs text-gray-600 not-italic font-medium">No disponible</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-3 h-3 rounded-full bg-[#f0fdf4] border border-[#dcfce7]"></div>
+                                        <span className="text-xs text-gray-600 not-italic font-medium">Disponible (consultar por Whatsapp)</span>
+                                    </div>
+                                </div>
                             </div>
                         }
                     />

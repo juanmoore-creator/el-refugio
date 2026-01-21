@@ -3,7 +3,7 @@ import { DayPicker } from 'react-day-picker';
 import "react-day-picker/style.css";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, timestamp, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, Timestamp, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function AdminDashboard() {
@@ -11,6 +11,9 @@ export default function AdminDashboard() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [disabledDays, setDisabledDays] = useState([]);
+    const [dailyPrice, setDailyPrice] = useState('');
+    const [priceLoading, setPriceLoading] = useState(false);
+    const [saveLoading, setSaveLoading] = useState(false);
 
     const fetchBookings = async () => {
         setLoading(true);
@@ -43,9 +46,46 @@ export default function AdminDashboard() {
         }
     };
 
+    const fetchPrice = async () => {
+        setPriceLoading(true);
+        try {
+            const docRef = doc(db, "settings", "pricing");
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setDailyPrice(docSnap.data().dailyPrice);
+            }
+        } catch (error) {
+            console.error("Error fetching price: ", error);
+        } finally {
+            setPriceLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchBookings();
+        fetchPrice();
     }, []);
+
+    const handleUpdatePrice = async () => {
+        if (!dailyPrice) {
+            alert("El precio no puede estar vacío.");
+            return;
+        }
+
+        setSaveLoading(true);
+        try {
+            await setDoc(doc(db, "settings", "pricing"), {
+                dailyPrice: dailyPrice,
+                lastUpdated: Timestamp.now()
+            });
+            alert("Precio actualizado correctamente.");
+        } catch (error) {
+            console.error("Error updating price: ", error);
+            alert("Error al actualizar el precio.");
+        } finally {
+            setSaveLoading(false);
+        }
+    };
 
     const handleBlockDates = async () => {
         if (!range?.from || !range?.to) {
@@ -113,8 +153,8 @@ export default function AdminDashboard() {
                         onClick={handleBlockDates}
                         disabled={!range?.from || !range?.to}
                         className={`mt-6 w-full py-3 rounded-xl font-bold transition-all ${!range?.from || !range?.to
-                                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                : 'bg-hunter-green text-white hover:bg-olive-bark shadow-lg shadow-hunter-green/20'
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-hunter-green text-white hover:bg-olive-bark shadow-lg shadow-hunter-green/20'
                             }`}
                     >
                         Bloquear Fechas Seleccionadas
@@ -151,6 +191,53 @@ export default function AdminDashboard() {
                             ))}
                         </div>
                     )}
+                </div>
+
+                {/* Price Management Section */}
+                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-muted-olive/20 mt-8">
+                    <h2 className="text-2xl font-semibold mb-6 text-olive-bark flex items-center gap-2">
+                        <span className="material-icons-outlined">payments</span>
+                        Precio de la Estadía
+                    </h2>
+                    <div className="max-w-md mx-auto">
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-blue-slate mb-2">Precio por día (ej: 75.000)</label>
+                                <div className="relative">
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-hunter-green font-bold">$</span>
+                                    <input
+                                        type="text"
+                                        value={dailyPrice}
+                                        onChange={(e) => setDailyPrice(e.target.value)}
+                                        placeholder="75.000"
+                                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-muted-olive/30 focus:outline-none focus:ring-2 focus:ring-hunter-green/20 font-bold text-hunter-green"
+                                        disabled={priceLoading}
+                                    />
+                                </div>
+                                {priceLoading && <p className="text-xs text-blue-slate mt-2 italic">Cargando precio actual...</p>}
+                            </div>
+                            <button
+                                onClick={handleUpdatePrice}
+                                disabled={saveLoading || !dailyPrice}
+                                className={`w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${saveLoading || !dailyPrice
+                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                    : 'bg-hunter-green text-white hover:bg-olive-bark shadow-lg shadow-hunter-green/20'
+                                    }`}
+                            >
+                                {saveLoading ? (
+                                    <>
+                                        <span className="animate-spin material-icons-outlined text-sm">sync</span>
+                                        Guardando...
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="material-icons-outlined">save</span>
+                                        Actualizar Precio
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

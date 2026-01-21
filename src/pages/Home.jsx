@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
 import BookingCalendar from '../components/BookingCalendar';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [price, setPrice] = useState('75.000');
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
@@ -35,6 +37,19 @@ const Home = () => {
     };
 
     useEffect(() => {
+        const fetchPrice = async () => {
+            try {
+                const docRef = doc(db, "settings", "pricing");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setPrice(docSnap.data().dailyPrice);
+                }
+            } catch (error) {
+                console.error("Error fetching price:", error);
+            }
+        };
+        fetchPrice();
+
         const handleKeyDown = (e) => {
             if (!isGalleryOpen) return;
             if (e.key === 'Escape') closeGallery();
@@ -232,9 +247,14 @@ const Home = () => {
                                     <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
                                     Atención personalizada
                                 </li>
-                                <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium">
-                                    <span className="material-icons-outlined text-olive-bark dark:text-gold-sand">check_circle</span>
-                                    Temporada 2026: $75.000 por día.
+                                <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium group">
+                                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-sand/20 text-olive-bark dark:text-gold-sand group-hover:scale-110 transition-transform">
+                                        <span className="material-icons-outlined">calendar_today</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs uppercase tracking-widest opacity-60">Temporada 2026</p>
+                                        <p className="text-xl font-bold font-serif italic">${price} <span className="text-sm font-sans not-italic font-normal opacity-70">/ noche</span></p>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
