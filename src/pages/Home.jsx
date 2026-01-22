@@ -95,7 +95,7 @@ const Home = () => {
 
                     <div className="flex items-center gap-2">
                         <a
-                            href="https://wa.me/5492216430365"
+                            href="https://wa.me/5492216128091"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-full hover:bg-muted-olive/20 dark:hover:bg-snow/20 text-hunter-green dark:text-snow transition-colors flex items-center justify-center"

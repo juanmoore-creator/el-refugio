@@ -72,7 +72,7 @@ export default function BookingCalendar() {
 
             const message = `Hola, vi el departamento en la web. Me interesa reservar del ${startStr} al ${endStr}. ¿Está disponible?`;
             const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/5492216430365?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/5492216128091?text=${encodedMessage}`, '_blank');
         }
     };
 
