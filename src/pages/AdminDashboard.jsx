@@ -182,7 +182,13 @@ export default function AdminDashboard() {
 
     return (
         <div className="p-8 max-w-6xl mx-auto bg-snow min-h-screen">
-            <h1 className="text-4xl font-bold mb-8 text-hunter-green border-b pb-4">Panel de Administración</h1>
+            <div className="flex justify-between items-center mb-8 border-b pb-4">
+                <h1 className="text-4xl font-bold text-hunter-green">Panel de Administración</h1>
+                <a href="/" className="px-5 py-2.5 bg-hunter-green text-white rounded-xl font-bold hover:bg-olive-bark shadow-lg shadow-hunter-green/20 transition-all flex items-center gap-2">
+                    <span className="material-icons-outlined">home</span>
+                    Ir a la Home
+                </a>
+            </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
                 {/* Calendar Section */}

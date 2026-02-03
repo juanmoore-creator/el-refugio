@@ -347,6 +347,7 @@ const Home = () => {
                                 <li><a href="#galeria" className="hover:text-snow transition-colors">Galería</a></li>
                                 <li><a href="#reservas" className="hover:text-snow transition-colors">Reservas</a></li>
                                 <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+                                <li><a href="/admin" className="hover:text-white transition-colors">Administrador</a></li>
                             </ul>
                         </div>
                         <div>
@@ -356,14 +357,7 @@ const Home = () => {
                                     <span className="material-icons-outlined text-sm">location_on</span>
                                     <span>Yate Fortuna <br />Aguas Verdes</span>
                                 </li>
-                                <li className="flex items-center justify-center md:justify-start gap-3">
-                                    <span className="material-icons-outlined text-sm">phone</span>
 
-                                </li>
-                                <li className="flex items-center justify-center md:justify-start gap-3">
-                                    <span className="material-icons-outlined text-sm">email</span>
-                                    hola@elrefugio.com
-                                </li>
                             </ul>
                         </div>
                     </div>
