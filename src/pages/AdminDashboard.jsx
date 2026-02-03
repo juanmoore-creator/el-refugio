@@ -3,7 +3,7 @@ import { DayPicker } from 'react-day-picker';
 import "react-day-picker/style.css";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, Timestamp, getDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, Timestamp, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function AdminDashboard() {
@@ -14,6 +14,17 @@ export default function AdminDashboard() {
     const [dailyPrice, setDailyPrice] = useState('');
     const [priceLoading, setPriceLoading] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
+
+    // New Booking States
+    const [clientName, setClientName] = useState('');
+    const [totalAmount, setTotalAmount] = useState('');
+    const [paidAmount, setPaidAmount] = useState('');
+    const [note, setNote] = useState('');
+    const [isPaid, setIsPaid] = useState(false);
+
+    // Editing State
+    const [editingId, setEditingId] = useState(null);
+    const [editForm, setEditForm] = useState({});
 
     const fetchBookings = async () => {
         setLoading(true);
@@ -98,14 +109,62 @@ export default function AdminDashboard() {
                 startDate: Timestamp.fromDate(range.from),
                 endDate: Timestamp.fromDate(range.to),
                 createdAt: Timestamp.now(),
-                type: 'admin'
+                type: 'admin',
+                clientName: clientName || 'Sin nombre',
+                totalAmount: totalAmount || 0,
+                paidAmount: paidAmount || 0,
+                note: note || '',
+                isPaid: isPaid || false
             });
+
+            // Reset form
             setRange(undefined);
+            setClientName('');
+            setTotalAmount('');
+            setPaidAmount('');
+            setNote('');
+            setIsPaid(false);
+
             fetchBookings();
             alert("Fechas bloqueadas con éxito.");
         } catch (error) {
             console.error("Error blocking dates: ", error);
             alert("Error al bloquear fechas.");
+        }
+    };
+
+    const startEditing = (booking) => {
+        setEditingId(booking.id);
+        setEditForm({
+            clientName: booking.clientName || '',
+            totalAmount: booking.totalAmount || '',
+            paidAmount: booking.paidAmount || '',
+            note: booking.note || '',
+            isPaid: booking.isPaid || false
+        });
+    };
+
+    const cancelEditing = () => {
+        setEditingId(null);
+        setEditForm({});
+    };
+
+    const handleUpdateBooking = async (id) => {
+        try {
+            const bookingRef = doc(db, "bookings", id);
+            await updateDoc(bookingRef, {
+                clientName: editForm.clientName,
+                totalAmount: editForm.totalAmount,
+                paidAmount: editForm.paidAmount,
+                note: editForm.note,
+                isPaid: editForm.isPaid
+            });
+            setEditingId(null);
+            fetchBookings();
+            alert("Reserva actualizada correctamente");
+        } catch (error) {
+            console.error("Error updating booking:", error);
+            alert("Error al actualizar la reserva");
         }
     };
 
@@ -149,6 +208,64 @@ export default function AdminDashboard() {
                             }
                         />
                     </div>
+
+                    {/* Booking Form Inputs */}
+                    <div className="mt-6 space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-olive-bark mb-1">Nombre del Cliente</label>
+                            <input
+                                type="text"
+                                value={clientName}
+                                onChange={(e) => setClientName(e.target.value)}
+                                className="w-full p-2 border border-muted-olive/30 rounded-lg focus:outline-none focus:border-hunter-green"
+                                placeholder="Ej: Juan Pérez"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-olive-bark mb-1">Monto Total</label>
+                                <input
+                                    type="number"
+                                    value={totalAmount}
+                                    onChange={(e) => setTotalAmount(e.target.value)}
+                                    className="w-full p-2 border border-muted-olive/30 rounded-lg focus:outline-none focus:border-hunter-green"
+                                    placeholder="$"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-olive-bark mb-1">Seña / Pago</label>
+                                <input
+                                    type="number"
+                                    value={paidAmount}
+                                    onChange={(e) => setPaidAmount(e.target.value)}
+                                    className="w-full p-2 border border-muted-olive/30 rounded-lg focus:outline-none focus:border-hunter-green"
+                                    placeholder="$"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-olive-bark mb-1">Nota</label>
+                            <textarea
+                                value={note}
+                                onChange={(e) => setNote(e.target.value)}
+                                className="w-full p-2 border border-muted-olive/30 rounded-lg focus:outline-none focus:border-hunter-green h-20 resize-none"
+                                placeholder="Notas adicionales..."
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="isPaid"
+                                checked={isPaid}
+                                onChange={(e) => setIsPaid(e.target.checked)}
+                                className="w-4 h-4 text-hunter-green rounded focus:ring-hunter-green"
+                            />
+                            <label htmlFor="isPaid" className="text-sm font-medium text-olive-bark">Pago Completo</label>
+                        </div>
+                    </div>
                     <button
                         onClick={handleBlockDates}
                         disabled={!range?.from || !range?.to}
@@ -171,22 +288,104 @@ export default function AdminDashboard() {
                     ) : (
                         <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                             {bookings.map((booking) => (
-                                <div key={booking.id} className="flex justify-between items-center p-4 bg-snow rounded-xl border border-muted-olive/10 group hover:border-muted-olive/30 transition-all">
-                                    <div>
-                                        <p className="font-bold text-hunter-green">
-                                            {format(booking.start, "d 'de' MMMM", { locale: es })} - {format(booking.end, "d 'de' MMMM", { locale: es })}
-                                        </p>
-                                        <p className="text-xs text-blue-slate mt-1 opacity-60">
-                                            Creado el {format(booking.createdAt?.toDate ? booking.createdAt.toDate() : new Date(booking.createdAt), "d/M HH:mm")}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => handleDeleteBooking(booking.id)}
-                                        className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                                        title="Eliminar bloqueo"
-                                    >
-                                        <span className="material-icons-outlined">delete</span>
-                                    </button>
+                                <div key={booking.id} className="p-4 bg-snow rounded-xl border border-muted-olive/10 group hover:border-muted-olive/30 transition-all">
+                                    {editingId === booking.id ? (
+                                        // Edit Mode
+                                        <div className="space-y-3">
+                                            <div className="flex justify-between items-center bg-gray-100 p-2 rounded">
+                                                <span className="font-bold text-hunter-green text-sm">
+                                                    {format(booking.start, "d MMM", { locale: es })} - {format(booking.end, "d MMM", { locale: es })}
+                                                </span>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={editForm.clientName}
+                                                onChange={(e) => setEditForm({ ...editForm, clientName: e.target.value })}
+                                                className="w-full p-2 text-sm border rounded"
+                                                placeholder="Nombre Cliente"
+                                            />
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <input
+                                                    type="number"
+                                                    value={editForm.totalAmount}
+                                                    onChange={(e) => setEditForm({ ...editForm, totalAmount: e.target.value })}
+                                                    className="w-full p-2 text-sm border rounded"
+                                                    placeholder="Total"
+                                                />
+                                                <input
+                                                    type="number"
+                                                    value={editForm.paidAmount}
+                                                    onChange={(e) => setEditForm({ ...editForm, paidAmount: e.target.value })}
+                                                    className="w-full p-2 text-sm border rounded"
+                                                    placeholder="Pagado"
+                                                />
+                                            </div>
+                                            <textarea
+                                                value={editForm.note}
+                                                onChange={(e) => setEditForm({ ...editForm, note: e.target.value })}
+                                                className="w-full p-2 text-sm border rounded h-16"
+                                                placeholder="Nota"
+                                            />
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={editForm.isPaid}
+                                                    onChange={(e) => setEditForm({ ...editForm, isPaid: e.target.checked })}
+                                                />
+                                                <span className="text-sm">Pago Completo</span>
+                                            </div>
+                                            <div className="flex justify-end gap-2 mt-2">
+                                                <button onClick={cancelEditing} className="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
+                                                <button onClick={() => handleUpdateBooking(booking.id)} className="px-3 py-1 text-xs bg-hunter-green text-white rounded hover:bg-opacity-90">Guardar</button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        // View Mode
+                                        <>
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <p className="font-bold text-hunter-green">
+                                                        {format(booking.start, "d 'de' MMMM", { locale: es })} - {format(booking.end, "d 'de' MMMM", { locale: es })}
+                                                    </p>
+                                                    <p className="font-semibold text-lg text-olive-bark mt-1">
+                                                        {booking.clientName || 'Cliente sin nombre'}
+                                                    </p>
+                                                    <div className="text-sm text-blue-slate mt-1 space-y-0.5">
+                                                        <p>Total: ${booking.totalAmount || 0} | Pagado: ${booking.paidAmount || 0}</p>
+                                                        <p className={`${(booking.totalAmount - booking.paidAmount) > 0 ? 'text-red-500 font-bold' : 'text-green-600 font-bold'}`}>
+                                                            Resta: ${booking.totalAmount - booking.paidAmount}
+                                                        </p>
+                                                        {booking.note && (
+                                                            <div className="mt-2 p-2 bg-yellow-50 text-yellow-800 rounded text-xs italic border border-yellow-100">
+                                                                "{booking.note}"
+                                                            </div>
+                                                        )}
+                                                        {booking.isPaid && (
+                                                            <span className="inline-block mt-1 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-bold">
+                                                                PAGADO TOTAL
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <button
+                                                        onClick={() => startEditing(booking)}
+                                                        className="p-2 text-blue-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+                                                        title="Editar"
+                                                    >
+                                                        <span className="material-icons-outlined">edit</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDeleteBooking(booking.id)}
+                                                        className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                                                        title="Eliminar"
+                                                    >
+                                                        <span className="material-icons-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>
