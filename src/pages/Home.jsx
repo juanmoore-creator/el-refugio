@@ -355,7 +355,7 @@ const Home = () => {
                             <ul className="space-y-4 text-snow/70">
                                 <li className="flex items-start justify-center md:justify-start gap-3">
                                     <span className="material-icons-outlined text-sm">location_on</span>
-                                    <span>Yate Fortuna <br />Aguas Verdes</span>
+                                    <span>Yate Fortuna esquina Crucero la Argentina<br />Aguas Verdes</span>
                                 </li>
 
                             </ul>
