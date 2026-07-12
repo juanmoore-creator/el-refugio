@@ -7,6 +7,8 @@ const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [price, setPrice] = useState('75.000');
+    const [useCustomMessage, setUseCustomMessage] = useState(false);
+    const [customMessage, setCustomMessage] = useState('');
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
@@ -43,7 +45,10 @@ const Home = () => {
                 const docRef = doc(db, "settings", "pricing");
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    setPrice(docSnap.data().dailyPrice);
+                    const data = docSnap.data();
+                    setPrice(data.dailyPrice || '75.000');
+                    setUseCustomMessage(data.useCustomMessage || false);
+                    setCustomMessage(data.customMessage || '');
                 }
             } catch (error) {
                 console.error("Error fetching price:", error);
@@ -250,11 +255,15 @@ const Home = () => {
                                 </li>
                                 <li className="flex items-center gap-3 text-hunter-green dark:text-snow/90 font-medium group">
                                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-sand/20 text-olive-bark dark:text-gold-sand group-hover:scale-110 transition-transform">
-                                        <span className="material-icons-outlined">calendar_today</span>
+                                        <span className="material-icons-outlined">{useCustomMessage ? 'info' : 'calendar_today'}</span>
                                     </div>
                                     <div>
                                         <p className="text-xs uppercase tracking-widest opacity-60">Temporada 2026</p>
-                                        <p className="text-xl font-bold font-serif italic">${price} <span className="text-sm font-sans not-italic font-normal opacity-70">/ noche</span></p>
+                                        {useCustomMessage ? (
+                                            <p className="text-xl font-bold font-serif italic">{customMessage}</p>
+                                        ) : (
+                                            <p className="text-xl font-bold font-serif italic">${price} <span className="text-sm font-sans not-italic font-normal opacity-70">/ noche</span></p>
+                                        )}
                                     </div>
                                 </li>
                             </ul>

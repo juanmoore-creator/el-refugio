@@ -12,6 +12,8 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [disabledDays, setDisabledDays] = useState([]);
     const [dailyPrice, setDailyPrice] = useState('');
+    const [useCustomMessage, setUseCustomMessage] = useState(false);
+    const [customMessage, setCustomMessage] = useState('');
     const [priceLoading, setPriceLoading] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
 
@@ -63,7 +65,10 @@ export default function AdminDashboard() {
             const docRef = doc(db, "settings", "pricing");
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setDailyPrice(docSnap.data().dailyPrice);
+                const data = docSnap.data();
+                setDailyPrice(data.dailyPrice || '');
+                setUseCustomMessage(data.useCustomMessage || false);
+                setCustomMessage(data.customMessage || '');
             }
         } catch (error) {
             console.error("Error fetching price: ", error);
@@ -78,8 +83,8 @@ export default function AdminDashboard() {
     }, []);
 
     const handleUpdatePrice = async () => {
-        if (!dailyPrice) {
-            alert("El precio no puede estar vacío.");
+        if (!useCustomMessage && !dailyPrice) {
+            alert("El precio no puede estar vacío si no usás un mensaje personalizado.");
             return;
         }
 
@@ -87,6 +92,8 @@ export default function AdminDashboard() {
         try {
             await setDoc(doc(db, "settings", "pricing"), {
                 dailyPrice: dailyPrice,
+                useCustomMessage: useCustomMessage,
+                customMessage: customMessage,
                 lastUpdated: Timestamp.now()
             });
             alert("Precio actualizado correctamente.");
@@ -184,9 +191,9 @@ export default function AdminDashboard() {
         <div className="p-8 max-w-6xl mx-auto bg-snow min-h-screen">
             <div className="flex justify-between items-center mb-8 border-b pb-4">
                 <h1 className="text-4xl font-bold text-hunter-green">Panel de Administración</h1>
-                <a href="/" className="px-5 py-2.5 bg-hunter-green text-white rounded-xl font-bold hover:bg-olive-bark shadow-lg shadow-hunter-green/20 transition-all flex items-center gap-2">
-                    <span className="material-icons-outlined">home</span>
-                    Ir a la Home
+                <a href="/?public=true" className="px-5 py-2.5 bg-hunter-green text-white rounded-xl font-bold hover:bg-olive-bark shadow-lg shadow-hunter-green/20 transition-all flex items-center gap-2">
+                    <span className="material-icons-outlined">visibility</span>
+                    Ver Vista Pública
                 </a>
             </div>
 
@@ -415,16 +422,41 @@ export default function AdminDashboard() {
                                         value={dailyPrice}
                                         onChange={(e) => setDailyPrice(e.target.value)}
                                         placeholder="75.000"
-                                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-muted-olive/30 focus:outline-none focus:ring-2 focus:ring-hunter-green/20 font-bold text-hunter-green"
-                                        disabled={priceLoading}
+                                        className={`w-full pl-8 pr-4 py-3 rounded-xl border border-muted-olive/30 focus:outline-none focus:ring-2 focus:ring-hunter-green/20 font-bold text-hunter-green ${useCustomMessage ? 'bg-gray-100 opacity-50 cursor-not-allowed' : ''}`}
+                                        disabled={priceLoading || useCustomMessage}
                                     />
                                 </div>
+
+                                <div className="mt-4 p-4 border border-muted-olive/20 rounded-xl bg-snow">
+                                    <div className="flex items-center gap-2">
+                                        <input 
+                                            type="checkbox" 
+                                            id="useCustomMessage" 
+                                            checked={useCustomMessage} 
+                                            onChange={(e) => setUseCustomMessage(e.target.checked)}
+                                            className="w-4 h-4 text-hunter-green rounded focus:ring-hunter-green cursor-pointer"
+                                        />
+                                        <label htmlFor="useCustomMessage" className="text-sm font-medium text-olive-bark cursor-pointer select-none">Mostrar un mensaje personalizado en lugar del precio</label>
+                                    </div>
+                                    {useCustomMessage && (
+                                        <div className="mt-3">
+                                            <input 
+                                                type="text"
+                                                value={customMessage}
+                                                onChange={(e) => setCustomMessage(e.target.value)}
+                                                placeholder="Ej: Consultar por WhatsApp"
+                                                className="w-full p-2 border border-muted-olive/30 rounded-lg focus:outline-none focus:border-hunter-green text-sm"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+
                                 {priceLoading && <p className="text-xs text-blue-slate mt-2 italic">Cargando precio actual...</p>}
                             </div>
                             <button
                                 onClick={handleUpdatePrice}
-                                disabled={saveLoading || !dailyPrice}
-                                className={`w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${saveLoading || !dailyPrice
+                                disabled={saveLoading || (!useCustomMessage && !dailyPrice) || (useCustomMessage && !customMessage)}
+                                className={`w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${saveLoading || (!useCustomMessage && !dailyPrice) || (useCustomMessage && !customMessage)
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                     : 'bg-hunter-green text-white hover:bg-olive-bark shadow-lg shadow-hunter-green/20'
                                     }`}
