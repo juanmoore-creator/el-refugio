@@ -21,17 +21,6 @@ export default function BookingCalendar() {
     const [bookedIntervals, setBookedIntervals] = useState([]);
     const [loading, setLoading] = useState(true);
     const [feedbackMessage, setFeedbackMessage] = useState(null);
-    const [numberOfMonths, setNumberOfMonths] = useState(1);
-
-    // Responsive multi-month view: 2 months on large screens (desktop), 1 on mobile/tablet
-    useEffect(() => {
-        const updateMonths = () => {
-            setNumberOfMonths(window.innerWidth >= 1024 ? 2 : 1);
-        };
-        updateMonths();
-        window.addEventListener('resize', updateMonths);
-        return () => window.removeEventListener('resize', updateMonths);
-    }, []);
 
     useEffect(() => {
         const q = query(collection(db, "bookings"));
@@ -151,9 +140,7 @@ export default function BookingCalendar() {
     ], [tomorrow, bookedIntervals]);
 
     return (
-        <div className={`flex flex-col items-center p-6 bg-white rounded-2xl shadow-xl mx-auto my-8 border border-muted-olive/10 transition-all duration-300 ${
-            numberOfMonths === 2 ? 'max-w-2xl' : 'max-w-md'
-        }`}>
+        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-xl max-w-md w-full mx-auto my-8 border border-muted-olive/10 transition-all duration-300">
             <div className="w-full flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-gray-800 font-sans">Reservar Fechas</h2>
                 {range?.from && (
@@ -178,10 +165,10 @@ export default function BookingCalendar() {
                     <DayPicker
                         mode="range"
                         min={2}
+                        numberOfMonths={1}
                         selected={range}
                         onSelect={handleSelect}
                         disabled={disabledDays}
-                        numberOfMonths={numberOfMonths}
                         modifiers={{
                             booked: (date) => isDayBooked(date),
                             available: (date) => {
